@@ -11,6 +11,18 @@ export const getAllCreatures = async () => {
     }
 };
 
+
+export const getCreatureById = async (id: string) => {
+    try {
+        return await db.creature.findFirst({
+            where: {id}
+        });
+    } catch (error) {
+        Logger.error('Error fetching a creature by id', error);
+        throw error;
+    }
+};
+
 export const createCreature = async (data: Prisma.CreatureCreateInput) => {
     try {
         const newCreature = await db.creature.create({
@@ -30,7 +42,7 @@ export const updateCreature = async (
 ) => {
     try {
         const updatedCreature = await db.creature.update({
-            where: {id: Number(id)},
+            where: {id},
             data
         });
         Logger.info(`Updated creature with ID: ${ id }`);
@@ -44,7 +56,7 @@ export const updateCreature = async (
 export const removeCreature = async (id: string) => {
     try {
         const deletedCreature = await db.creature.delete({
-            where: {id: Number(id)}
+            where: {id}
         });
         Logger.info(`Deleted creature with ID: ${ id }`);
         return deletedCreature;

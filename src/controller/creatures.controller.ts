@@ -1,4 +1,10 @@
-import { getAllCreatures, createCreature, updateCreature, removeCreature } from "@/services/creatures.service.js";
+import {
+    getAllCreatures,
+    createCreature,
+    updateCreature,
+    removeCreature,
+    getCreatureById
+} from "@/services/creatures.service.js";
 import { Request, Response } from "express";
 import { Creature } from "@prisma/client";
 
@@ -6,6 +12,15 @@ export const get = async (req: Request, res: Response) => {
     try {
         const creatures: Creature[] = await getAllCreatures();
         res.json(creatures);
+    } catch {
+        res.status(500).json({ error: "Impossible de récupérer les créatures" });
+    }
+};
+
+export const getById = async (req: Request, res: Response) => {
+    try {
+        const creature: Creature | null = await getCreatureById(req.params.id);
+        res.json(creature ?? {});
     } catch {
         res.status(500).json({ error: "Impossible de récupérer les créatures" });
     }

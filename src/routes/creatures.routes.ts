@@ -4,6 +4,7 @@ import * as CreatureController from "@/controller/creatures.controller";
 const router = express.Router();
 
 router.get("/", CreatureController.get);
+router.get("/:id", CreatureController.getById);
 router.post("/", CreatureController.add);
 router.put("/:id", CreatureController.update);
 router.delete("/:id", CreatureController.remove);
