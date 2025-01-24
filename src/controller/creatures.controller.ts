@@ -1,13 +1,12 @@
-import {
-    getAllCreatures,
-    createCreature,
-    updateCreature,
-    removeCreature,
-    getCreatureById
-} from "@/services/creatures.service.js";
+import { getAllCreatures, createCreature, updateCreature, removeCreature } from "@/services/creatures.service.js";
 import { Request, Response } from "express";
 import { Creature } from "@prisma/client";
 
+/**
+ * Retrieve all creatures
+ * @param req
+ * @param res
+ */
 export const get = async (req: Request, res: Response) => {
     try {
         const creatures: Creature[] = await getAllCreatures();
@@ -17,16 +16,15 @@ export const get = async (req: Request, res: Response) => {
     }
 };
 
-export const getById = async (req: Request, res: Response) => {
-    try {
-        const creature: Creature | null = await getCreatureById(req.params.id);
-        res.json(creature ?? {});
-    } catch {
-        res.status(500).json({ error: "Impossible de récupérer les créatures" });
-    }
-};
-
+/**
+ * Add a new creature
+ * @param req
+ * @param res
+ */
 export const add = async (req: Request, res: Response) => {
+    if (req.body.rarity < 1 || req.body.rarity > 5) {
+        return res.status(400).json({ error: "La rareté doit être comprise entre 1 et 5" });
+    }
     try {
         const newCreature: Creature = await createCreature(req.body);
         res.json(newCreature);
@@ -35,7 +33,15 @@ export const add = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Update a creature
+ * @param req
+ * @param res
+ */
 export const update = async (req: Request, res: Response) => {
+    if (req.body.rarity < 1 || req.body.rarity > 5) {
+        return res.status(400).json({ error: "La rareté doit être comprise entre 1 et 5" });
+    }
     try {
         const creature: Creature = await updateCreature(req.params.id, req.body);
         res.json(creature);
@@ -44,6 +50,11 @@ export const update = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * Remove a creature
+ * @param req
+ * @param res
+ */
 export const remove = async (req: Request, res: Response) => {
     try {
         const creature: Creature = await removeCreature(req.params.id);
