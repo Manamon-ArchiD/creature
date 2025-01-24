@@ -1,4 +1,7 @@
-export const swaggerOptions = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.swaggerOptions = void 0;
+exports.swaggerOptions = {
     swagger: "2.0",
     info: {
         title: "Creature Microservice API",
