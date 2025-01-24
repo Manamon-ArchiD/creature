@@ -16,14 +16,8 @@ datasource db {
 model Creature {
   id           String @id @default(cuid())
   name         String
-  type         Type
+  type         String
   attackPoint  Int
   defensePoint Int 
   rarity       Int
-}
-
-enum Type {
-  fire
-  water
-  grass
 }
