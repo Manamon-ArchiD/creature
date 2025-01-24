@@ -1,32 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCreature = exports.assignCreature = exports.getAllCreatures = void 0;
-const creatures_model_1 = require("@/model/creatures.model");
+exports.removeCreature = exports.updateCreature = exports.createCreature = exports.getAllCreatures = void 0;
+const index_js_1 = require("./index.js");
 const getAllCreatures = async () => {
-    return creatures_model_1.creatures; // TODO: Implement a database
+    const creatureList = await index_js_1.prisma.creature.findMany();
+    return creatureList;
 };
 exports.getAllCreatures = getAllCreatures;
-const assignCreature = async (matchId, creatureId) => {
-    const creature = creatures_model_1.creatures.find((c) => c.id === creatureId);
-    if (!creature) {
-        throw new Error("Creature not found");
-    }
-    return {
-        message: "Creature assigned successfully",
-        matchId,
-        creature,
-    };
+const createCreature = async (data) => {
+    const newCreature = await index_js_1.prisma.creature.create({
+        data,
+    });
+    return newCreature;
 };
-exports.assignCreature = assignCreature;
-const deleteCreature = async (creatureId) => {
-    const index = creatures_model_1.creatures.findIndex((c) => c.id === creatureId);
-    if (index === -1) {
-        throw new Error("Creature not found");
-    }
-    const [deletedCreature] = creatures_model_1.creatures.splice(index, 1);
-    return {
-        message: "Creature sold successfully",
-        creditsRefunded: deletedCreature.price,
-    };
+exports.createCreature = createCreature;
+const updateCreature = async (id, data) => {
+    const updatedCreature = await index_js_1.prisma.creature.update({
+        where: { id },
+        data,
+    });
+    return updatedCreature;
 };
-exports.deleteCreature = deleteCreature;
+exports.updateCreature = updateCreature;
+const removeCreature = async (id) => {
+    const deletedCreature = await index_js_1.prisma.creature.delete({
+        where: { id },
+    });
+    return deletedCreature;
+};
+exports.removeCreature = removeCreature;
