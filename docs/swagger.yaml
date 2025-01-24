@@ -12,68 +12,137 @@ paths:
     get:
       tags:
         - "Creatures"
-      description: "Retrieve the list of creatures available in the store"
+      description: "Retrieve the list of creatures"
       responses:
         "200":
           description: "List of creatures"
           content:
             application/json:
               example:
-                - id: 1
-                  name: "Dragon"
-                  type: "Fire"
-                  price: 100
-                - id: 2
-                  name: "Unicorn"
-                  type: "Mystic"
-                  price: 0
-  /creatures/assign:
-    post:
-      tags:
-        - "Creatures"
-      description: "Assign a creature to the arena for a match"
-      body:
-        - name: "matchId"
-          in: "body"
-          required: false
-          description: "The ID of the match"
-          schema:
-            type: "integer"
-      responses:
-        "200":
-          description: "Creature assigned successfully"
+                - id: "12345678-1234-5678-1234-567812345678"
+                  name: "Pikatchoum"
+                  type: "Electric"
+                  attackPoint: 100
+                  defensePoint: 180
+                  rarity: 3
+                - id: "87654321-8765-4321-1234-567812345678"
+                  name: "Carapace"
+                  type: "Eau"
+                  attackPoint: 80
+                  defensePoint: 100
+                  rarity: 1
+        "404":
+          description: "No creatures found"
           content:
             application/json:
               example:
-                message: "Creature assigned successfully"
-                creature:
-                  id: 1
-                  name: "Dragon"
-                  type: "Fire"
-                matchId: 12
-  /creatures/{creatureId}:
+                message: "No creatures found"
+
+  /creatures:
+    post:
+      tags:
+        - "Creatures"
+      description: "Create a creature (role admin needed)"
+      body:
+        - name: "creature"
+          in: "body"
+          required: true
+          description: "The creature to create"
+          schema:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+              type:
+                type: "string"
+              attackPoint:
+                type: "integer"
+              defensePoint:
+                type: "integer"
+              rarity:
+                type: "integer"
+      responses:
+        "200":
+          description: "Creature created successfully"
+          content:
+            application/json:
+              example:
+                message: "Creature created successfully"
+        "400":
+          description: "Invalid creature"
+          content:
+            application/json:
+              example:
+                message: "Invalid creature"
+
+  /creatures/{id}:
     delete:
       tags:
         - "Creatures"
-      description: "Sell a creature to get refunded credits"
+      description: "Delete a creature (role admin needed)"
       parameters:
-        - name: "creatureId"
+        - name: "id"
           in: "path"
           required: true
-          description: "The ID of the creature to sell"
+          description: "The ID of the creature to delete"
           schema:
-            type: "integer"
+            type: "string"
       responses:
         "200":
           description: "Creature sold successfully"
           content:
             application/json:
               example:
-                message: "Creature sold successfully"
-                creditsRefunded: 50
+                message: "Creature deleted successfully"
+
         "404":
           description: "Creature not found"
           content:
             application/json:
               example:
-                error: "Creature not found"
+                message: "Creature not found"
+
+  /creatures/{id}:
+    put:
+      tags:
+        - "Creatures"
+      description: "Update a creature (role admin needed)"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "The ID of the creature to update"
+          schema:
+            type: "string"
+      body:
+        - name: "creature"
+          in: "body"
+          required: true
+          description: "The creature to update"
+          schema:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+              type:
+                type: "string"
+              attackPoint:
+                type: "integer"
+              defensePoint:
+                type: "integer"
+              rarity:
+                type: "integer"
+      responses:
+        "200":
+          description: "Creature updated successfully"
+          content:
+            application/json:
+              example:
+                message: "Creature updated successfully"
+
+        "404":
+          description: "Creature not found"
+          content:
+            application/json:
+              example:
+                message: "Creature not found"
