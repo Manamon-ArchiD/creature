@@ -40,7 +40,7 @@ const getCreatures = async (req, res) => {
         const creatures = await CreatureService.getAllCreatures();
         res.json(creatures);
     }
-    catch (error) {
+    catch {
         res.status(500).json({ error: "Failed to fetch creatures" });
     }
 };
@@ -51,8 +51,8 @@ const assignCreature = async (req, res) => {
         const result = await CreatureService.assignCreature(matchId, creatureId);
         res.json(result);
     }
-    catch (error) {
-        res.status(400).json({ error: "error.message" });
+    catch {
+        res.status(400).json({ error: "An error occurred while assign a creature" });
     }
 };
 exports.assignCreature = assignCreature;
@@ -62,8 +62,8 @@ const deleteCreature = async (req, res) => {
         const result = await CreatureService.deleteCreature(Number(creatureId));
         res.json(result);
     }
-    catch (error) {
-        res.status(404).json({ error: "error.message" });
+    catch {
+        res.status(404).json({ error: "An error occurred while deleting the creature" });
     }
 };
 exports.deleteCreature = deleteCreature;

@@ -8,9 +8,8 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "module": "CommonJS",
+    "module": "commonjs",
     "target": "ESNext",
-    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "skipLibCheck": true
   },

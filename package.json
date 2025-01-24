@@ -1,7 +1,6 @@
 {
   "name": "creatures",
   "version": "1.0.0",
-  "type": "module",
   "main": "index.ts",
   "scripts": {
     "start": "node dist/index.js",
