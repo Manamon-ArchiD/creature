@@ -13,12 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Creature {
-  id        String      @id @default(cuid())
-  name      String
-  type      String
-  attackPoint     Int
-  defensePoint    Int
-  rarity    Int  
+  id           String @id @default(cuid())
+  name         String
+  type         Type
+  attackPoint  Int
+  defensePoint Int 
+  rarity       Int
+}
+
+enum Type {
+  fire
+  water
+  grass
 }
