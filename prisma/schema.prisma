@@ -15,7 +15,7 @@ datasource db {
 
 
 model Creature {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(cuid())
   name      String
   type      String
   attackPoint     Int
