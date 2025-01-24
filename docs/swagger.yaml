@@ -16,32 +16,39 @@ paths:
       responses:
         "200":
           description: "List of creatures"
-          content:
-            application/json:
-              example:
-                - id: "12345678-1234-5678-1234-567812345678"
-                  name: "Pikatchoum"
-                  type: "Electric"
-                  attackPoint: 100
-                  defensePoint: 180
-                  rarity: 3
-                - id: "87654321-8765-4321-1234-567812345678"
-                  name: "Carapace"
-                  type: "Eau"
-                  attackPoint: 80
-                  defensePoint: 100
-                  rarity: 1
+          schema:
+            type: "object"
+            properties:
+              creatures:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                    name:
+                      type: "string"
+                    type:
+                      type: "string"
+                    attackPoint:
+                      type: "integer"
+                    defensePoint:
+                      type: "integer"
+                    rarity:
+                      type: "integer"
         "404":
           description: "No creatures found"
-          content:
-            application/json:
-              example:
-                message: "No creatures found"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "No creatures found"
     post:
       tags:
         - "Creatures"
       description: "Create a creature (role admin needed)"
-      body:
+      parameters:
         - name: "creature"
           in: "body"
           required: true
@@ -62,18 +69,63 @@ paths:
       responses:
         "200":
           description: "Creature created successfully"
-          content:
-            application/json:
-              example:
-                message: "Creature created successfully"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Creature created successfully"
         "400":
           description: "Invalid creature"
-          content:
-            application/json:
-              example:
-                message: "Invalid creature"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Invalid creature"
 
   /creatures/{id}:
+    get:
+      tags:
+        - "Creatures"
+      description: "Retrieve a creature by ID"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "The ID of the creature to retrieve"
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "Creature found"
+          schema:
+            type: "object"
+            properties:
+              creature:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                  name:
+                    type: "string"
+                  type:
+                    type: "string"
+                  attackPoint:
+                    type: "integer"
+                  defensePoint:
+                    type: "integer"
+                  rarity:
+                    type: "integer"
+        "404":
+          description: "Creature not found"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Creature not found"
+
     delete:
       tags:
         - "Creatures"
@@ -88,17 +140,21 @@ paths:
       responses:
         "200":
           description: "Creature sold successfully"
-          content:
-            application/json:
-              example:
-                message: "Creature deleted successfully"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Creature deleted successfully"
 
         "404":
           description: "Creature not found"
-          content:
-            application/json:
-              example:
-                message: "Creature not found"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Creature not found"
     put:
       tags:
         - "Creatures"
@@ -110,7 +166,6 @@ paths:
           description: "The ID of the creature to update"
           schema:
             type: "string"
-      body:
         - name: "creature"
           in: "body"
           required: true
@@ -131,14 +186,18 @@ paths:
       responses:
         "200":
           description: "Creature updated successfully"
-          content:
-            application/json:
-              example:
-                message: "Creature updated successfully"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Creature updated successfully"
 
         "404":
           description: "Creature not found"
-          content:
-            application/json:
-              example:
-                message: "Creature not found"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Creature not found"
