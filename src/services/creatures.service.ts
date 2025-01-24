@@ -1,32 +1,28 @@
-import { Prisma } from '@prisma/client';
-import { prisma } from './index.js';
+import { Prisma } from "@prisma/client";
+import { prisma } from "./index.js";
 
 export const getAllCreatures = async () => {
-	const creatureList = await prisma.creature.findMany();
-	return creatureList;
+	return await prisma.creature.findMany();
 };
 
 export const createCreature = async (data: Prisma.CreatureCreateInput) => {
-	const newCreature = await prisma.creature.create({
+	return await prisma.creature.create({
 		data,
 	});
-	return newCreature;
 };
 
 export const updateCreature = async (
 	id: string,
 	data: Prisma.CreatureUpdateInput
 ) => {
-	const updatedCreature = await prisma.creature.update({
-		where: { id },
+	return await prisma.creature.update({
+		where: { id: Number(id) },
 		data,
 	});
-	return updatedCreature;
 };
 
 export const removeCreature = async (id: string) => {
-	const deletedCreature = await prisma.creature.delete({
-		where: { id },
+	return await prisma.creature.delete({
+		where: { id: Number(id) },
 	});
-	return deletedCreature;
 };
