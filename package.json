@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "ts-node -r tsconfig-paths/register src/index.ts",
+    "dev": "tsx src/index.ts",
     "lint": "npx eslint .",
     "build": "tsc",
     "migrate": "npx prisma migrate dev --name init",

@@ -1,69 +1,44 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCreature = exports.assignCreature = exports.getCreatures = void 0;
-const CreatureService = __importStar(require("@/services/creatures.service"));
-const getCreatures = async (req, res) => {
+exports.remove = exports.update = exports.add = exports.get = void 0;
+const creatures_service_js_1 = require("@/services/creatures.service.js");
+const get = async (req, res) => {
     try {
-        const creatures = await CreatureService.getAllCreatures();
+        const creatures = await (0, creatures_service_js_1.getAllCreatures)();
         res.json(creatures);
     }
     catch {
-        res.status(500).json({ error: "Failed to fetch creatures" });
+        res.status(500).json({ error: "Impossible de récupérer les créatures" });
     }
 };
-exports.getCreatures = getCreatures;
-const assignCreature = async (req, res) => {
+exports.get = get;
+const add = async (req, res) => {
     try {
-        const { matchId, creatureId } = req.body;
-        const result = await CreatureService.assignCreature(matchId, creatureId);
-        res.json(result);
+        const newCreature = await (0, creatures_service_js_1.createCreature)(req.body);
+        res.json(newCreature);
     }
     catch {
-        res.status(400).json({ error: "An error occurred while assign a creature" });
+        res.status(500).json({ error: "Impossible de créer la créature" });
     }
 };
-exports.assignCreature = assignCreature;
-const deleteCreature = async (req, res) => {
+exports.add = add;
+const update = async (req, res) => {
     try {
-        const { creatureId } = req.params;
-        const result = await CreatureService.deleteCreature(Number(creatureId));
-        res.json(result);
+        const creature = await (0, creatures_service_js_1.updateCreature)(req.params.id, req.body);
+        res.json(creature);
     }
     catch {
-        res.status(404).json({ error: "An error occurred while deleting the creature" });
+        res.status(500).json({ error: "Impossible de mettre à jour la créature" });
     }
 };
-exports.deleteCreature = deleteCreature;
+exports.update = update;
+const remove = async (req, res) => {
+    try {
+        const creature = await (0, creatures_service_js_1.removeCreature)(req.params.id);
+        res.json(creature);
+    }
+    catch {
+        res.status(500).json({ error: "Impossible de supprimer la créature" });
+    }
+};
+exports.remove = remove;
