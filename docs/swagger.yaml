@@ -37,8 +37,6 @@ paths:
             application/json:
               example:
                 message: "No creatures found"
-
-  /creatures:
     post:
       tags:
         - "Creatures"
@@ -101,8 +99,6 @@ paths:
             application/json:
               example:
                 message: "Creature not found"
-
-  /creatures/{id}:
     put:
       tags:
         - "Creatures"
