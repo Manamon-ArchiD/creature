@@ -2,6 +2,11 @@ import { getAllCreatures, createCreature, updateCreature, removeCreature } from 
 import { Request, Response } from "express";
 import { Creature } from "@prisma/client";
 
+/**
+ * Retrieve all creatures
+ * @param req
+ * @param res
+ */
 export const get = async (req: Request, res: Response) => {
     try {
         const creatures: Creature[] = await getAllCreatures();
@@ -11,6 +16,11 @@ export const get = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Add a new creature
+ * @param req
+ * @param res
+ */
 export const add = async (req: Request, res: Response) => {
     try {
         const newCreature: Creature = await createCreature(req.body);
@@ -20,6 +30,11 @@ export const add = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Update a creature
+ * @param req
+ * @param res
+ */
 export const update = async (req: Request, res: Response) => {
     try {
         const creature: Creature = await updateCreature(req.params.id, req.body);
@@ -29,6 +44,11 @@ export const update = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * Remove a creature
+ * @param req
+ * @param res
+ */
 export const remove = async (req: Request, res: Response) => {
     try {
         const creature: Creature = await removeCreature(req.params.id);
