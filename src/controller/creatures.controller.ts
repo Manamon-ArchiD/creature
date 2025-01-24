@@ -22,6 +22,9 @@ export const get = async (req: Request, res: Response) => {
  * @param res
  */
 export const add = async (req: Request, res: Response) => {
+    if (req.body.rarity < 1 || req.body.rarity > 5) {
+        return res.status(400).json({ error: "La rareté doit être comprise entre 1 et 5" });
+    }
     try {
         const newCreature: Creature = await createCreature(req.body);
         res.json(newCreature);
@@ -36,6 +39,9 @@ export const add = async (req: Request, res: Response) => {
  * @param res
  */
 export const update = async (req: Request, res: Response) => {
+    if (req.body.rarity < 1 || req.body.rarity > 5) {
+        return res.status(400).json({ error: "La rareté doit être comprise entre 1 et 5" });
+    }
     try {
         const creature: Creature = await updateCreature(req.params.id, req.body);
         res.json(creature);
